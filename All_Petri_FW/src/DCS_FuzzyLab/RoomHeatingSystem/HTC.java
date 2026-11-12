@@ -103,8 +103,21 @@ public class HTC {
 	p8.SetName("P8");
 	pn.PlaceList.add(p8);
 
-	DataFuzzy p9 = new DataFuzzy(); p9.SetName("P9"); p9.SetValue(new Fuzzy(0.0F)); pn.PlaceList.add(p9); // e(k-1)
-	DataFuzzy p10 = new DataFuzzy(); p10.SetName("P10"); pn.PlaceList.add(p10); //combined PI error
+	DataFuzzy p9 = new DataFuzzy();
+	p9.SetName("P9");
+	p9.SetValue(new Fuzzy(0.0F)); // Initial token e(k-1) shown in diagrampn.PlaceList.add(p9);
+
+	DataFuzzy p10 = new DataFuzzy();
+	p10.SetName("P10");
+	pn.PlaceList.add(p10);
+
+	DataFuzzy p11 = new DataFuzzy();
+	p11.SetName("P11");
+	pn.PlaceList.add(p11);
+
+	DataFuzzy p12 = new DataFuzzy();
+	p12.SetName("P12");
+	pn.PlaceList.add(p12);
 
 	DataTransfer gascmd = new DataTransfer();
 	gascmd.SetName("gascmd");
@@ -222,10 +235,10 @@ public class HTC {
 			// T4 ------------------------------------------------
 			PetriTransition t4 = new PetriTransition(pn);
 			t4.TransitionName = "T4";
-			t4.InputPlaceName.add("P4");
+			t4.InputPlaceName.add("P11");
 			t4.InputPlaceName.add("P6");
 
-			Condition T4Ct1 = new Condition(t4, "P4", TransitionCondition.NotNull);
+			Condition T4Ct1 = new Condition(t4, "P11", TransitionCondition.NotNull);
 			Condition T4Ct2 = new Condition(t4, "P6", TransitionCondition.NotNull);
 			T4Ct1.SetNextCondition(LogicConnector.AND, T4Ct2);
 
@@ -233,7 +246,7 @@ public class HTC {
 			grdT4.condition = T4Ct1;
 
 			ArrayList<PlaceNameWithWeight> input4 = new ArrayList<>();
-			input4.add(new PlaceNameWithWeight("P10", 1.2F));
+			input4.add(new PlaceNameWithWeight("P11", 1.2F));
 			input4.add(new PlaceNameWithWeight("P6", 1F));
 
 			ArrayList<String> Output4 = new ArrayList<>();
@@ -281,23 +294,74 @@ public class HTC {
 			// T6 ----------------------------------------------------
 			PetriTransition t6 = new PetriTransition(pn);
 			t6.TransitionName = "T6";
-			t6.InputPlaceName.add("P4");
-			t6.InputPlaceName.add("P9");
-			Condition T6Ct1 = new Condition(t6, "P4", TransitionCondition.NotNull);
-			Condition T6Ct2 = new Condition(t6, "P9", TransitionCondition.NotNull);
-			T6Ct1.SetNextCondition(LogicConnector.AND, T6Ct2);
+			t6.InputPlaceName.add("P12");
+
+			Condition T6Ct1 = new Condition(t6, "P12", TransitionCondition.NotNull);
+
 			GuardMapping grdT6 = new GuardMapping();
 			grdT6.condition = T6Ct1;
+
 			ArrayList<PlaceNameWithWeight> input6 = new ArrayList<>();
-			input6.add(new PlaceNameWithWeight("P4", 0.8F));
-			input6.add(new PlaceNameWithWeight("P9", 0.2F));
+			input6.add(new PlaceNameWithWeight("P12", 1F));
+
 			ArrayList<String> Output6 = new ArrayList<>();
-			Output6.add("P10");
-			grdT6.Activations.add(new Activation(t6, adder, input6, TransitionOperation.FLRS, Output6));
+			Output6.add("P9");
+
+			grdT6.Activations.add(new Activation(t6, OneXOneDefaultTable, input6, TransitionOperation.FLRS, Output6));
+
 			t6.GuardMappingList.add(grdT6);
-			t6.Delay = 0;
+			t6.Delay = 1;
 			pn.Transitions.add(t6);
 
+
+			// T7 ------------------------------------------------------
+			PetriTransition t7 = new PetriTransition(pn);
+			t7.TransitionName = "T7";
+			t7.InputPlaceName.add("P4");
+
+			Condition T7Ct1 = new Condition(t7, "P4", TransitionCondition.NotNull);
+
+			GuardMapping grdT7 = new GuardMapping();
+			grdT7.condition = T7Ct1;
+
+			ArrayList<PlaceNameWithWeight> input7 = new ArrayList<>();
+			input7.add(new PlaceNameWithWeight("P4", 1F));
+
+			ArrayList<String> Output7 = new ArrayList<>();
+			Output7.add("P12");
+			Output7.add("P10");
+
+			grdT7.Activations.add(new Activation(t7, OneXTwoDefaultTable, input7, TransitionOperation.FLRS, Output7));
+
+			t7.GuardMappingList.add(grdT7);
+			t7.Delay = 0;
+			pn.Transitions.add(t7);
+
+			// T8 -----------------------------------------------------
+			PetriTransition t8 = new PetriTransition(pn);
+			t8.TransitionName = "T8";
+			t8.InputPlaceName.add("P9");
+			t8.InputPlaceName.add("P10");
+
+			Condition T8Ct1 = new Condition(t8, "P9", TransitionCondition.NotNull);
+			Condition T8Ct2 = new Condition(t8, "P10", TransitionCondition.NotNull);
+			T8Ct1.SetNextCondition(LogicConnector.AND, T8Ct2);
+
+			GuardMapping grdT8 = new GuardMapping();
+			grdT8.condition = T8Ct1;
+
+			ArrayList<PlaceNameWithWeight> input8 = new ArrayList<>();
+			input8.add(new PlaceNameWithWeight("P9", 0.2F));  // w2
+			input8.add(new PlaceNameWithWeight("P10", 0.8F)); // w1
+
+			ArrayList<String> Output8 = new ArrayList<>();
+			Output8.add("P11");
+
+			grdT8.Activations.add(new Activation(t8, adder, input8, TransitionOperation.FLRS, Output8));
+
+			t8.GuardMappingList.add(grdT8);
+			t8.Delay = 0;
+			pn.Transitions.add(t8);
 
 			// -------------------------------------------
 

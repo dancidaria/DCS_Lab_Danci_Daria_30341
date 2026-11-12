@@ -21,7 +21,7 @@ public class OETPN {
 	pn.PetriNetName = "OETPN";
 	pn.NetworkPort = 1080;
 	
-	pn.SetInputFile("D:\\PetriInputData\\OETPNInput.txt");
+	pn.SetInputFile("C:\\Users\\user\\Desktop\\DCS_Lab_Danci_Daria_30341\\All_Petri_FW\\src\\DCS_FuzzyLab\\PetriInputData\\OETPNInput.txt");
 	
 	DataFuzzy p_00 = new DataFuzzy();
 	p_00.SetName("p_00");

@@ -18,7 +18,7 @@ public class ORC {
         pn.PetriNetName = "ORC";
         pn.NetworkPort = 1084;
 
-        pn.SetInputFile("D:\\PetriInputData\\ORC.txt");
+        pn.SetInputFile("C:\\Users\\user\\Desktop\\DCS_Lab_Danci_Daria_30341\\All_Petri_FW\\src\\DCS_FuzzyLab\\PetriInputData\\ORC.txt");
 
         FLRS readerTwoOutputs = new FLRS(
                 new FV(FZ.NL, FZ.NL), new FV(FZ.NM, FZ.NM), new FV(FZ.ZR, FZ.ZR), new FV(FZ.PM, FZ.PM), new FV(FZ.PL, FZ.PL),

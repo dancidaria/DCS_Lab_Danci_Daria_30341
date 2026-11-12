@@ -31,7 +31,7 @@ public class Comparator {
 								   new FV(FZ.PL), new FV(FZ.PL), new FV(FZ.PM), new FV(FZ.ZR), new FV(FZ.NM),
 								   new FV(FZ.PL), new FV(FZ.PL), new FV(FZ.PL), new FV(FZ.PM),	new FV(FZ.ZR));
 	
-	FLRS separator = new FLRS(new FV(FZ.NL,FZ.FF), new FV(FZ.NL,FZ.FF), new FV(FZ.FF,FZ.FF), new FV(FZ.FF,FZ.PL),new FV(FZ.FF,FZ.PL));
+	FLRS separator = new FLRS(new FV(FZ.FF,FZ.NL), new FV(FZ.FF,FZ.NL), new FV(FZ.FF,FZ.FF), new FV(FZ.PL,FZ.FF),new FV(FZ.PL,FZ.FF));
 
 	differentiator.Print();
 	separator.Print();
@@ -144,8 +144,8 @@ public class Comparator {
 			GuardMapping grdtOut1 = new GuardMapping();
 			grdtOut1.condition = TOutCt1;
 			
-			grdtOut1.Activations.add(new Activation(tOut, "NLToken", TransitionOperation.Move, "P5"));
-			grdtOut1.Activations.add(new Activation(tOut, "", TransitionOperation.MakeNull, "P6")); //to consume the token from the previous tick
+			grdtOut1.Activations.add(new Activation(tOut, "NLToken", TransitionOperation.Move, "P6"));
+			grdtOut1.Activations.add(new Activation(tOut, "", TransitionOperation.MakeNull, "P5")); //to consume the token from the previous tick
 			tOut.GuardMappingList.add(grdtOut1);
 			
 			
@@ -154,8 +154,8 @@ public class Comparator {
 			GuardMapping grdtOut2 = new GuardMapping();
 			grdtOut2.condition = TOutCt2;
 			
-			grdtOut2.Activations.add(new Activation(tOut, "PLToken", TransitionOperation.Move, "P6"));
-			grdtOut2.Activations.add(new Activation(tOut, "", TransitionOperation.MakeNull, "P5")); //to consume the token from the previous tick
+			grdtOut2.Activations.add(new Activation(tOut, "PLToken", TransitionOperation.Move, "P5"));
+			grdtOut2.Activations.add(new Activation(tOut, "", TransitionOperation.MakeNull, "P6")); //to consume the token from the previous tick
 			tOut.GuardMappingList.add(grdtOut2);
 			
 			
